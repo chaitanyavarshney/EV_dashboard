@@ -40,8 +40,8 @@ The dashboard analyzes the following aspects of the EV population data:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/ev-population-dashboard.git
-cd ev-population-dashboard
+git clone https://github.com/chaitanyavarshney/EV_dashboard.git
+cd react-boilerplate-for-starter
 ```
 
 2. **Install dependencies**
@@ -109,4 +109,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Chaitanya Varshney - chaitanya.varshney@gmail.com
 
-Project Link: [https://github.com/yourusername/ev-population-dashboard](https://github.com/yourusername/ev-population-dashboard)
+Project Link: [https://github.com/chaitanyavarshney/EV_dashboard](https://github.com/chaitanyavarshney/EV_dashboard)
