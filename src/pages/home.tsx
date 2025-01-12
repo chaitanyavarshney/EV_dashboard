@@ -1,99 +1,114 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-restricted-imports */
 import { useState, useEffect } from 'react';
 
 import _ from 'lodash';
 import { Car } from 'lucide-react';
-import Papa from 'papaparse';
+import Papa, { ParseResult } from 'papaparse';
 import { PieChart, Pie, Cell, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Home = () => {
-  const [evTypeData, setEvTypeData] = useState([]);
-  const [topCitiesData, setTopCitiesData] = useState([]);
-  const [rangeByMakeData, setRangeByMakeData] = useState([]);
-  const [yearData, setYearData] = useState([]);
-  const [totalVehicles, setTotalVehicles] = useState(0);
+
+  interface EVVehicle {
+    // Required fields based on usage in code
+    "Electric Vehicle Type": "Battery Electric Vehicle (BEV)" | "Plug-in Hybrid Electric Vehicle (PHEV)";
+    "City": string;
+    "Make": string;
+    "Electric Range": number;
+    "Model Year": number;
+  
+    // Additional fields that would likely be present in an EV dataset
+    "County": string;
+    "State": string;
+    "Model": string;
+    "VIN (1-10)": string;
+    "Clean Alternative Fuel Vehicle (CAFV) Eligibility": string;
+    "DOL Vehicle ID": string;
+    "Vehicle Location": string;
+    "Legislative District": number;
+    "Base MSRP": number | null;
+    "2020 Census Tract": string;
+    "Postal Code": string;
+  }
+  
+  const [evTypeData, setEvTypeData] = useState< {name: string; value: number; }[]>([]);
+  const [topCitiesData, setTopCitiesData] = useState<{ city: string; count: number; }[]>([]);
+  const [rangeByMakeData, setRangeByMakeData] = useState<{ make: string; averageRange: number; }[]>([]);
+  const [yearData, setYearData] = useState<{ year: number; count: number; }[]>([]);
+  const [totalVehicles, setTotalVehicles] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Try to fetch using relative path
         const response = await fetch('/assets/Electric_Vehicle_Population_Data.csv');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const csvText = await response.text();
 
-        const parsedData = Papa.parse(csvText, {
+        Papa.parse<EVVehicle>(csvText, {
           header: true,
           dynamicTyping: true,
           skipEmptyLines: true,
-          error: (error) => {
-            console.error('Papa Parse Error:', error);
-            setError(error.message);
-          }
+          complete: (results: ParseResult<EVVehicle>) => {
+            const data = results.data;
+            setTotalVehicles(data.length);
+
+            // EV Type Distribution
+            const evTypes = _.countBy(data, 'Electric Vehicle Type');
+            setEvTypeData(Object.entries(evTypes).map(([name, value]) => ({
+              name: name === 'Battery Electric Vehicle (BEV)' ? 'BEV' : 'PHEV',
+              value
+            })));
+
+            // Top 10 Cities
+            const cities = _(data)
+              .groupBy('City')
+              .map((group, city) => ({
+                city,
+                count: group.length
+              }))
+              .orderBy(['count'], ['desc'])
+              .take(10)
+              .value();
+            setTopCitiesData(cities);
+
+            // Range by Make
+            const rangeData = _(data)
+              .groupBy('Make')
+              .map((group, make) => ({
+                make,
+                averageRange: _.meanBy(group, 'Electric Range')
+              }))
+              .orderBy(['averageRange'], ['desc'])
+              .take(10)
+              .value();
+            setRangeByMakeData(rangeData);
+
+            // Year Distribution
+            const years = _(data)
+              .groupBy('Model Year')
+              .map((group, year) => ({
+                year: parseInt(String(year)),
+                count: group.length
+              }))
+              .orderBy(['year'], ['asc'])
+              .value();
+            setYearData(years);
+          },
         });
-
-        if (parsedData.errors.length > 0) {
-          console.warn('Parse warnings:', parsedData.errors);
-        }
-
-        const data = parsedData.data;
-        console.log('Parsed data sample:', data.slice(0, 2)); // Debug log
-
-        setTotalVehicles(data.length);
-
-        // EV Type Distribution
-        const evTypes = _.countBy(data, 'Electric Vehicle Type');
-        setEvTypeData(Object.entries(evTypes).map(([name, value]) => ({
-          name: name === 'Battery Electric Vehicle (BEV)' ? 'BEV' : 'PHEV',
-          value
-        })));
-
-        // Top 10 Cities
-        const cities = _(data)
-          .groupBy('City')
-          .map((group, city) => ({
-            city,
-            count: group.length
-          }))
-          .orderBy(['count'], ['desc'])
-          .take(10)
-          .value();
-        setTopCitiesData(cities);
-
-        // Range by Make
-        const rangeData = _(data)
-          .groupBy('Make')
-          .map((group, make) => ({
-            make,
-            averageRange: _.meanBy(group, 'Electric Range')
-          }))
-          .orderBy(['averageRange'], ['desc'])
-          .take(10)
-          .value();
-        setRangeByMakeData(rangeData);
-
-        // Year Distribution
-        const years = _(data)
-          .groupBy('Model Year')
-          .map((group, year) => ({
-            year: parseInt(year),
-            count: group.length
-          }))
-          .orderBy(['year'], ['asc'])
-          .value();
-        setYearData(years);
-
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError(error.message);
       }
     };
 
     fetchData();
   }, []);
+
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
@@ -132,7 +147,7 @@ const Home = () => {
                   dataKey="value"
                   label={({ name, value }) => `${name}: ${value}`}
                 >
-                  {evTypeData.map((entry, index) => (
+                  {evTypeData.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
