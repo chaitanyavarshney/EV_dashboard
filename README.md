@@ -1,77 +1,112 @@
-# Boilerplate and Starter for React JS 18+, Material-UI, Tailwind CSS v3.3 and Typescript
+# EV Population Dashboard
 
 <p align="center">
-<img src="public/assets/imgs/banner.png?raw=true" alt="React js starter banner" />
+<img src="public/assets/dashboard-preview.png" alt="EV Dashboard Preview" />
 </p>
 
-🚀🚀🚀 Boilerplate and Starter for React.js, Material-UI, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: React.js, TypeScript, Axios, ESLint, Prettier, Husky, Lint-Staged, VSCode, PostCSS, Tailwind CSS.
+## 🚀 Overview
 
-Clone this project and use it to create your own [React.js](https://nextjs.org) project.
+An interactive dashboard application that provides insightful visualizations of Electric Vehicle (EV) population data. This project demonstrates modern frontend development practices and data visualization techniques to present meaningful insights about EV adoption and trends.
 
-### Features
+## ✨ Features
 
-- ⚡ [React.js](https://react.dev/)
-- ⚡ [Material-UI](https://mui.com/)
-- 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
-- 💎 Integrate with [Tailwind CSS](https://tailwindcss.com)
-- ✅ Strict Mode for TypeScript and React 18
-- 📏 Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals, Tailwind CSS and Airbnb configuration)
-- 💖 Code Formatter with [Prettier](https://prettier.io)
-- 🦊 Husky for Git Hooks
-- 🚫 Lint-staged for running linters on Git staged files
-- 🗂 VSCode configuration: Debug, Settings, Tasks and extension for PostCSS, ESLint, Prettier, TypeScript, Jest
+- **Interactive Visualizations**: Dynamic charts and graphs showcasing EV population trends
+- **Data Filtering**: Filter data by make, model, year, and location
+- **Key Metrics**: Important statistics and KPIs about EV adoption
+- **Responsive Design**: Seamless experience across desktop and mobile devices
+- **Performance Optimized**: Fast loading and smooth interactions with large datasets
 
-### Requirements
+## 🛠️ Tech Stack
 
-- Node.js 16+ and pnpm
+- **Frontend Framework**: React.js 18+
+- **Type Safety**: TypeScript
+- **Styling**: Tailwind CSS for responsive design
+- **State Management**: [Your choice - Redux/Context/etc.]
+- **Charts**: [Your choice - D3.js/Chart.js/etc.]
+- **API Integration**: Axios for data fetching
+- **Build Tool**: Vite
 
-### Getting started
+## 📊 Data Analysis
 
-Run the following command on your local environment:
+The dashboard analyzes the following aspects of the EV population data:
 
-```shell
-git clone --depth=1 https://github.com/sonht113/react-boilerplate-for-starter.git
-cd my-project-name
+- Geographic distribution of EVs
+- Popular EV models and manufacturers
+- Year-over-year growth trends
+- Battery capacity and range statistics
+- Adoption rates by region
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/ev-population-dashboard.git
+cd ev-population-dashboard
+```
+
+2. **Install dependencies**
+```bash
+npm install
+# or
+yarn install
+# or
 pnpm install
 ```
 
-Then, you can run locally in development mode with live reload:
-
-```shell
-pnpm run dev
+3. **Start the development server**
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
 ```
 
-Open http://localhost:5173 with your favorite browser to see your project.
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-```shell
-.
-├── README.md                       # README file
-├── .github                         # GitHub folder
-├── .husky                          # Husky configuration
-├── public                          # Public assets folder
-├── src
-│   ├── apis                        # Common apis folder
-│   ├── components                  # Component folder
-│   ├── data                        # Data constants JS Pages
-│   └── features                    # Features folder
-│   ├── hooks                       # Hooks customs folder
-│   ├── layout                      # Layout Pages
-│   └── pages                       # React JS Pages
-│   ├── provider                    # Provider folder
-│   └── routes                      # Routes folder
-│   ├── ts                          # Type and Enum folder
-│   ├── utils                       # Utility functions
-├── tailwind.config.js              # Tailwind CSS configuration
-└── tsconfig.json                   # TypeScript configuration
+## 📁 Project Structure
+
+```
+ev-population-dashboard/
+├── src/
+│   ├── components/        # Reusable UI components
+│   ├── pages/            # Page components
+│   ├── hooks/            # Custom React hooks
+│   ├── services/         # API and data services
+│   ├── utils/            # Helper functions
+│   ├── types/            # TypeScript types/interfaces
+│   └── styles/           # Global styles and themes
+├── public/               # Static assets
+└── data/                # EV population dataset
 ```
 
-### Customization
+## 📈 Available Scripts
 
-- `src/index.css`: your CSS file using Tailwind CSS
-- `src/main.tsx`: default theme
+- `dev`: Start development server
+- `build`: Build for production
+- `preview`: Preview production build
+- `lint`: Run ESLint
+- `test`: Run tests
 
-You have access to the whole code source if you need further customization. The provided code is only example for you to start your project. The sky is the limit 🚀.
+## 🤝 Contributing
 
----
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Made with ♥ by [TrongSon](https://www.facebook.com/profile.php?id=100032736788526&locale=vi_VN)
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Electric Vehicle Population Data Source: [Source Name]
+- [Any other acknowledgments]
+
+## 📧 Contact
+
+Chaitanya Varshney - chaitanya.varshney@gmail.com
+
+Project Link: [https://github.com/yourusername/ev-population-dashboard](https://github.com/yourusername/ev-population-dashboard)
